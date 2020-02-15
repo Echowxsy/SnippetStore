@@ -23,7 +23,8 @@ function getMenu (app, mainWindow) {
     label: 'File',
     submenu: [
       {
-        label: 'Exit',
+        label: '退出',
+        accelerator: macOS ? 'Command+Q' : 'Alt+F4',
         click () {
           app.quit()
         }
@@ -32,23 +33,23 @@ function getMenu (app, mainWindow) {
   }
 
   const snippet = {
-    label: 'Snippet',
+    label: '代码片段',
     submenu: [
       {
-        label: 'Create new snippet',
+        label: '创建代码片段',
         accelerator: macOS ? 'Command+N' : 'Control+N',
         click () {
           mainWindow.webContents.send('modal:open', 'pickSnippetTypeModal')
         }
       },
       {
-        label: 'Create new single file snippet',
+        label: '创建单文件代码片段',
         click () {
           mainWindow.webContents.send('modal:open', 'createSnippetModal')
         }
       },
       {
-        label: 'Create new multi file snippet',
+        label: '创建多文件代码片段',
         click () {
           mainWindow.webContents.send(
             'modal:open',
@@ -57,14 +58,14 @@ function getMenu (app, mainWindow) {
         }
       },
       {
-        label: 'Import all snippets',
+        label: '导入所有代码片段',
         click () {
           dialog.showOpenDialog(
             BrowserWindow.getFocusedWindow(),
             {
-              title: 'Select snippet JSON file to import',
+              title: '选择需要导入的JSON文件',
               properties: ['openFile'],
-              buttonLabel: 'Import'
+              buttonLabel: '导入'
             },
             paths => {
               if (paths && paths[0]) {
@@ -76,14 +77,14 @@ function getMenu (app, mainWindow) {
         }
       },
       {
-        label: 'Export all snippets',
+        label: '导出所有代码片段',
         click () {
           dialog.showOpenDialog(
             BrowserWindow.getFocusedWindow(),
             {
-              title: 'Select folder to export',
+              title: '选择导出文件夹',
               properties: ['openDirectory'],
-              buttonLabel: 'Export'
+              buttonLabel: '导出'
             },
             paths => {
               if (paths && paths[0]) {
@@ -98,36 +99,36 @@ function getMenu (app, mainWindow) {
   }
 
   const help = {
-    label: 'Help',
+    label: '帮助',
     submenu: [
       {
-        label: 'Open Devtool',
+        label: '打开调试工具',
         accelerator: macOS ? 'Command+Alt+I' : 'Control+Shift+I',
         click () {
           BrowserWindow.getFocusedWindow().toggleDevTools()
         }
       },
       {
-        label: 'Reload window',
+        label: '重载窗口',
         accelerator: macOS ? 'Command+Alt+R' : 'Control+Shift+R',
         click () {
           BrowserWindow.getFocusedWindow().reload()
         }
       },
       {
-        label: 'About',
+        label: '关于',
         click () {
           dialog.showMessageBox({
             type: 'info',
             title: 'Snippet Store',
             message: 'Snippet Store',
             detail: getAppInfo(),
-            buttons: ['OK']
+            buttons: ['好']
           })
         }
       },
       {
-        label: 'Check for updates',
+        label: '检查更新',
         click () {
           checkForUpdate().then(hasNewUpdate => {
             if (hasNewUpdate) {
@@ -150,9 +151,9 @@ function getMenu (app, mainWindow) {
               dialog.showMessageBox({
                 type: 'info',
                 title: 'Snippet Store',
-                message: 'No new version',
-                detail: "You're now on the latest version of SnippetStore",
-                buttons: ['OK']
+                message: '没有新的版本',
+                detail: '您已经是最新版本了',
+                buttons: ['好']
               })
             }
           })
@@ -162,17 +163,17 @@ function getMenu (app, mainWindow) {
   }
 
   const edit = {
-    label: 'Edit',
+    label: '编辑',
     submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
+      { role: 'undo', label: '撤销' },
+      { role: 'redo', label: '重做' },
       { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      { role: 'pasteandmatchstyle' },
-      { role: 'delete' },
-      { role: 'selectall' }
+      { role: 'cut', label: '剪切' },
+      { role: 'copy', label: '复制' },
+      { role: 'paste', label: '粘贴' },
+      { role: 'pasteandmatchstyle', label: '格式粘贴' },
+      { role: 'delete', label: '删除' },
+      { role: 'selectall', label: '全选' }
     ]
   }
 
