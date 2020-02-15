@@ -60,7 +60,7 @@ export default class SearchSnippetBar extends React.Component {
         <input
           type="text"
           ref="search"
-          placeholder="Search..."
+          placeholder={i18n.__('Search...')}
           onChange={e => this.handleSearch(e.target.value)}
         />
         <div className="search-icon">
